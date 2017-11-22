@@ -31,6 +31,10 @@ DEBUG = True
 ALLOWED_HOSTS = ['*', ]
 
 # Application definition
+# 邮箱和用户名登录
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -45,9 +49,11 @@ INSTALLED_APPS = [
     'operation',
     'xadmin',
     'crispy_forms',
+    'captcha',
 ]
 
 AUTH_USER_MODEL = "users.UserProfile"
+
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -130,3 +136,13 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS=(
+    os.path.join(BASE_DIR,"static"),
+)
+
+EMAIL_HOST = "smtp.163.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "lt19942013@163.com"
+EMAIL_HOST_PASSWORD = "6632163liutao520"
+EMAIL_USE_TLS = False
+EMAIL_FROM = "lt19942013@163.com"
