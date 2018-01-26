@@ -21,12 +21,16 @@ class BannerAdmin(object):
 
 
 class GlobalSetting(object):
-    site_title = u"安捷培训系统后台管理平台"
-    site_footer = u"安捷光通成都科技有限公司"
+    site_title = u"安捷光通安全培训系统后台管理平台"
+    site_footer = u"2017安捷光通成都科技有限公司"
     menu_style = "accordion"
 
+class BaseSetting(object):
+    enable_themes=False
+    use_bootswatch=False
 
 xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
 xadmin.site.register(Banner, BannerAdmin)
 
 xadmin.site.register(views.CommAdminView, GlobalSetting)
+xadmin.site.register(views.BaseAdminView,BaseSetting)

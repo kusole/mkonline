@@ -1,14 +1,16 @@
+# _*_ encoding:utf-8 _*_
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 # Create your views here.
+from django.http import HttpResponse,HttpResponseRedirect
 from .models import UserProfile, EmailVerifyRecord
 from django.views.generic.base import View
 from django.contrib.auth.hashers import make_password
 from .forms import LoginForm, RegisterForm, ForgetForm, ModifyPwdForm
 from utils.email_send import send_register_email
-
+from django.core.urlresolvers import reverse
 
 class CustomBackend(ModelBackend):
     def authenticate(self, username=None, password=None, **kwargs):
@@ -32,6 +34,7 @@ class LoginView(View):
             user = authenticate(username=user_name, password=pass_word)
             if user is not None:
                 if user.is_active:
+
                     login(request, user)
                     return render(request, "index.html")
                 else:
@@ -41,6 +44,10 @@ class LoginView(View):
         else:
             return render(request, "login.html", {"login_form": login_form})
 
+class LogoutView(View):
+    def get(self,request):
+        logout(request)
+        return HttpResponseRedirect(reverse('index'))
 
 class RegisterView(View):
     def get(self, request):

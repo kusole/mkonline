@@ -26,7 +26,6 @@ class ThemePlugin(BaseAdminPlugin):
     use_bootswatch = False
     default_theme = static('xadmin/css/themes/bootstrap-xadmin.css')
     bootstrap2_theme = static('xadmin/css/themes/bootstrap-theme.css')
-
     def init_request(self, *args, **kwargs):
         return self.enable_themes
 

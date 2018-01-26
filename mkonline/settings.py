@@ -18,7 +18,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -37,6 +36,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 INSTALLED_APPS = [
+    'suit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,10 +50,10 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
+    'pure_pagination',
 ]
 
 AUTH_USER_MODEL = "users.UserProfile"
-
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,8 +71,7 @@ ROOT_URLCONF = 'mkonline.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.media',
             ],
         },
     },
@@ -136,13 +136,48 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS=(
-    os.path.join(BASE_DIR,"static"),
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
 )
-
+# xadmin
 EMAIL_HOST = "smtp.163.com"
 EMAIL_PORT = 25
 EMAIL_HOST_USER = "lt19942013@163.com"
 EMAIL_HOST_PASSWORD = "6632163liutao520"
 EMAIL_USE_TLS = False
 EMAIL_FROM = "lt19942013@163.com"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# suit
+SUIT_CONFIG = {
+    'ADMIN_NAME': '安捷光通安全培训系统后台管理平台',
+    'LIST_PER_PAGE': 20,
+    # 'MENU': ({'label': '用户',
+    #           'app': '用户',
+    #           'models': ('UserProfile',)},
+    #          ),
+    # 每一个字典表示左侧菜单的一栏
+    # label表示name，app表示上边的install的app，models表示用了哪些models
+    'HEADER_DATE_FORMAT': 'l, j. F Y',  # Saturday, 16th March 2013
+    'HEADER_TIME_FORMAT': 'H:i',  # 18:42
+    'SHOW_REQUIRED_ASTERISK': True,
+    'CONFIRM_UNSAVED_CHANGES': True,
+    'MENU_OPEN_FIRST_CHILD': True,
+    'MENU_ICONS': {
+        'sites': 'icon-leaf',
+        'auth': 'icon-lock',
+        'users': 'icon-user',
+        'organization': 'icon-asterisk',
+        'courses':'icon-book',
+        'operation':'icon-wrench',
+    },
+}
+# 分页功能配置
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 5,
+    'MARGIN_PAGES_DISPLAYED': 2,
+
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True,
+}
